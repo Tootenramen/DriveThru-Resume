@@ -24,7 +24,7 @@ game engine: just `three.js` and about 700 lines of hand-written physics and wor
 
 ## The city
 
-- **North road: the timeline.** Five career chapters, oldest first, ending at the tower marked NOW.
+- **North road: the timeline.** Six career chapters, oldest first, ending at the tower marked LATEST.
 - **East: skills and certifications.** Pylons scaled to the skill levels, and a ring of floating cert slabs.
 - **West: education and languages.**
 - **South: the gallery.** Six generative art pieces drawn by code in your browser: flow field, pulse, glitch, rain, trails, a fractal tree.
@@ -38,9 +38,9 @@ game engine: just `three.js` and about 700 lines of hand-written physics and wor
 
 ## Make it yours
 
-The sample résumé is the author's public one from [ResumeAI](https://github.com/Tootenramen/ResumeAI). Replace the
-values in `data.js` (`name`, `title`, `summary`, `jobs`, `skills`, `certs`, `edu`, `langs`, `linkedin`, `github`).
-The five-job road and the skill pylons are generated from that data. To change the puzzle, edit `SECRET` in `game.js`.
+The résumé in the demo is the author's. Replace the
+values in `data.js` (`name`, `title`, `summary`, `email`, `jobs`, `skills`, `certs`, `edu`, `langs`, `linkedin`, `github`).
+The six-job road and the skill pylons are generated from that data. To change the puzzle, edit `SECRET` in `game.js`.
 
 ## How it is built
 

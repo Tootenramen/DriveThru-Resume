@@ -23,9 +23,9 @@ function buildResume() {
   el.innerHTML =
     '<div class="bar"><b>// PLAIN RÉSUMÉ</b><span><button class="btn ghost" id="rsPrint">Print / save PDF</button> <button class="btn go" id="rsBack">Back to the city</button></span></div>' +
     '<div class="page"><h1>' + esc(R.name) + '</h1><div class="t">' + esc(R.title) + '</div>' +
-    '<div class="links"><a href="' + esc(R.linkedin) + '" target="_blank" rel="noopener">LinkedIn</a><a href="' + esc(R.github) + '" target="_blank" rel="noopener">GitHub</a></div>' +
+    '<div class="links"><a href="mailto:' + esc(R.email) + '">' + esc(R.email) + '</a><a href="' + esc(R.linkedin) + '" target="_blank" rel="noopener">LinkedIn</a><a href="' + esc(R.github) + '" target="_blank" rel="noopener">GitHub</a></div>' +
     '<h3>SUMMARY</h3><p>' + esc(R.summary) + '</p><h3>EXPERIENCE</h3>' + jobs +
-    '<div class="g"><div><h3>SKILLS</h3><ul>' + R.skills.map(function (s) { return '<li>' + esc(s[0]) + ' — ' + s[1] + '/5</li>'; }).join('') + '</ul>' +
+    '<div class="g"><div><h3>SKILLS</h3><ul>' + R.skills.map(function (s) { return '<li><b>' + esc(s[0]) + ':</b> ' + esc(s[1].join(', ')) + '</li>'; }).join('') + '</ul>' +
     '<h3>EDUCATION</h3><ul>' + R.edu.map(function (e) { return '<li>' + esc(e[0]) + ' — ' + esc(e[2]) + ' (' + esc(e[1]) + ')</li>'; }).join('') + '</ul>' +
     '<h3>LANGUAGES</h3><ul>' + R.langs.map(function (l) { return '<li>' + esc(l[0]) + ' — ' + esc(l[1]) + '</li>'; }).join('') + '</ul></div>' +
     '<div><h3>CERTIFICATIONS</h3><ul>' + R.certs.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul></div></div></div>';
@@ -218,11 +218,11 @@ function addZone(o) {
 
 /* --- chapters: timeline road, oldest at the south end, "now" at the tower --- */
 var jobsOld = R.jobs.slice().reverse();
-var jobPos = [[-30, -60, 24, 22, 38, 'y', 1], [30, -115, 24, 22, 48, 'c', -1], [-30, -170, 26, 24, 58, 'm', 1], [30, -225, 26, 24, 68, 'y', -1]];
+var jobPos = [[-30, -60, 24, 22, 38, 'y', 1], [30, -115, 24, 22, 48, 'c', -1], [-30, -170, 26, 24, 58, 'm', 1], [30, -225, 26, 24, 68, 'y', -1], [-30, -278, 26, 24, 78, 'c', 1]];
 jobsOld.forEach(function (j, i) {
   var kick = 'CH.0' + (i + 1) + '  ' + j.dates.replace(/ – /, ' → ');
   var lastYear = j.dates.split('–')[0].trim().split('/')[1];
-  if (i < 4) {
+  if (i < jobsOld.length - 1) {
     var p = jobPos[i], side = p[6], acc = p[5];
     building(p[0], p[1], p[2], p[3], p[4], acc);
     var sx = p[0] + side * (p[2] / 2 + .2);
@@ -231,11 +231,11 @@ jobsOld.forEach(function (j, i) {
   } else {
     building(0, -330, 44, 32, 104, 'y');
     building(-30, -322, 14, 14, 62, 'c'); building(30, -322, 14, 14, 74, 'm');
-    sign(signTex('CH.05 · NOW', j.co.toUpperCase(), j.dates + ' · ' + 'SOAR', HEX.y), 30, 15, 0, 34, -313.8, 0);
-    var nowc = mkCanvas(512, 128), g2 = nowc.getContext('2d'); g2.fillStyle = HEX.y; g2.font = '700 96px "Space Grotesk",sans-serif'; g2.textAlign = 'center'; g2.shadowColor = HEX.y; g2.shadowBlur = 24; g2.fillText('NOW', 256, 100);
+    sign(signTex('CH.0' + (i + 1) + ' · LATEST', j.co.toUpperCase(), j.dates + ' · CUSTOMER SUCCESS ENG.', HEX.y), 30, 15, 0, 34, -313.8, 0);
+    var nowc = mkCanvas(512, 128), g2 = nowc.getContext('2d'); g2.fillStyle = HEX.y; g2.font = '700 96px "Space Grotesk",sans-serif'; g2.textAlign = 'center'; g2.shadowColor = HEX.y; g2.shadowBlur = 24; g2.fillText('LATEST', 256, 100);
     sign(tex(nowc), 26, 6.5, 0, 66, -313.7, 0);
     glow(C.y, 60, 0, 108, -330, .5);
-    addZone({ id: 'j' + i, x: 0, z: -296, r: 14, color: C.y, cname: 'y', label: 'CH.05 · ' + j.co.toUpperCase() + ' · NOW', jobIdx: i, cardCls: '' });
+    addZone({ id: 'j' + i, x: 0, z: -304, r: 12, color: C.y, cname: 'y', label: 'CH.0' + (i + 1) + ' · ' + j.co.toUpperCase() + ' · LATEST', jobIdx: i, cardCls: '' });
   }
 });
 
@@ -256,16 +256,16 @@ jobsOld.forEach(function (j, i) {
 var certSlabs = [];
 (function () {
   R.skills.forEach(function (s, i) {
-    var h = s[1] * 7, x = 150, z = -48 + i * 10, col = [C.c, C.y, C.m, C.c, C.y][i], hc = [HEX.c, HEX.y, HEX.m, HEX.c, HEX.y][i];
+    var n = s[1].length, h = 6 + n * 4, x = 150, z = -48 + i * 10, col = [C.c, C.y, C.m][i % 3], hc = [HEX.c, HEX.y, HEX.m][i % 3];
     var m = new THREE.Mesh(new THREE.BoxGeometry(4, h, 4), new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: .22, blending: THREE.AdditiveBlending, depthWrite: false }));
     m.position.set(x, h / 2, z); scene.add(m);
     var e = new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry), new THREE.LineBasicMaterial({ color: col })); e.position.copy(m.position); scene.add(e);
-    for (var k = 1; k <= s[1]; k++) { var cap = new THREE.Mesh(new THREE.BoxGeometry(4.2, .25, 4.2), new THREE.MeshBasicMaterial({ color: col })); cap.position.set(x, k * 7 - .1, z); scene.add(cap); }
-    var lb = labelSprite(s[0].split('·')[0].trim() + ' ' + s[1] + '/5', hc, 18); lb.position.set(x, h + 4, z); scene.add(lb);
+    for (var k = 1; k <= n; k++) { var cap = new THREE.Mesh(new THREE.BoxGeometry(4.2, .25, 4.2), new THREE.MeshBasicMaterial({ color: col })); cap.position.set(x, 6 + k * 4 - .1, z); scene.add(cap); }
+    var lb = labelSprite(s[0].toUpperCase(), hc, 18); lb.position.set(x, h + 4, z); scene.add(lb);
     glow(col, 14, x, h + 1, z, .7);
     colliders.push({ x: x, z: z, r: 2.8 });
   });
-  addZone({ id: 'skills', x: 118, z: -28, r: 12, color: C.c, cname: 'c', label: 'SKILLS · BLUE × RED', cardCls: 'c2' });
+  addZone({ id: 'skills', x: 118, z: -28, r: 12, color: C.c, cname: 'c', label: 'SKILLS · THE TOOLBELT', cardCls: 'c2' });
   R.certs.forEach(function (c, i) {
     var m = new THREE.Mesh(new THREE.BoxGeometry(2.4, 4, .3), new THREE.MeshBasicMaterial({ color: C.c, transparent: true, opacity: .28, blending: THREE.AdditiveBlending, depthWrite: false }));
     var e = new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry), new THREE.LineBasicMaterial({ color: i % 3 === 0 ? C.y : C.c })); m.add(e);
@@ -521,11 +521,11 @@ function cardHTML(z) {
   }
   if (z.jobIdx != null) {
     var j = jobsOld[z.jobIdx];
-    return h + '<div class="k">// CHAPTER 0' + (z.jobIdx + 1) + ' OF 05' + (z.jobIdx === 4 ? ' · CURRENT' : '') + '</div><h2>' + esc(j.role) + '</h2><div class="m">' + esc(j.co) + ' · ' + esc(j.dates) + '<br>' + esc(j.loc) + '</div><p>' + esc(j.text) + '</p>';
+    return h + '<div class="k">// CHAPTER 0' + (z.jobIdx + 1) + ' OF 0' + jobsOld.length + (z.jobIdx === jobsOld.length - 1 ? ' · LATEST' : '') + '</div><h2>' + esc(j.role) + '</h2><div class="m">' + esc(j.co) + ' · ' + esc(j.dates) + '<br>' + esc(j.loc) + '</div><p>' + esc(j.text) + '</p>';
   }
   if (z.id === 'skills') {
-    return h + '<div class="k">// SKILLS · SELF-ASSESSED, 1–5</div><h2>Blue team × red team</h2>' + R.skills.map(function (s) { return '<div class="lvl"><span>' + esc(s[0]) + '</span>' + lvl(s[1]) + '</div>'; }).join('') +
-      '<div class="fine">The pylons to the east are scaled to these levels.</div>';
+    return h + '<div class="k">// SKILLS · THE TOOLBELT</div><h2>SOC to SOAR to customers</h2>' + R.skills.map(function (s) { return '<div class="lvl"><span><b>' + esc(s[0]) + '</b><br><small>' + esc(s[1].join(' · ')) + '</small></span></div>'; }).join('') +
+      '<div class="fine">One pylon per category, one block per tool.</div>';
   }
   if (z.id === 'certs') {
     return h + '<div class="k">// CERTIFICATIONS · ' + R.certs.length + '</div><h2>Credentials</h2><ul>' + R.certs.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul>';
@@ -544,8 +544,8 @@ function cardHTML(z) {
       '<input id="pw" type="text" autocomplete="off" spellcheck="false" placeholder="passphrase, then Enter" aria-label="passphrase"><div id="pwmsg" class="fine">Click the field to type (Esc returns to driving). Hint: every analyst&#39;s first decode.</div>';
   }
   if (z.id === 'garage') {
-    return h + '<div class="k">// THE GARAGE · CONTACT</div><h2>Let&#39;s talk</h2><p>Thanks for finding the door. Security automation, incident response, and building things that look as good as they run.</p>' +
-      '<div class="row"><a class="btn go" href="' + esc(R.linkedin) + '" target="_blank" rel="noopener">LinkedIn</a><a class="btn ghost" href="' + esc(R.github) + '" target="_blank" rel="noopener">GitHub</a><button class="btn ghost" id="rsOpen">Plain résumé</button></div>';
+    return h + '<div class="k">// THE GARAGE · CONTACT</div><h2>Let&#39;s talk</h2><p>Thanks for finding the door. Security automation, incident response, and building things that look as good as they run. Email me, and add me on LinkedIn.</p>' +
+      '<div class="row"><a class="btn go" href="mailto:' + esc(R.email) + '">Email</a><a class="btn ghost" href="' + esc(R.linkedin) + '" target="_blank" rel="noopener">LinkedIn</a><a class="btn ghost" href="' + esc(R.github) + '" target="_blank" rel="noopener">GitHub</a><button class="btn ghost" id="rsOpen">Plain résumé</button></div>';
   }
   return h;
 }

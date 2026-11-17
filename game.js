@@ -344,7 +344,7 @@ var artPieces = [];
 
 /* --- decoder terminal (the puzzle) --- */
 var SECRET = 'SOAR-EVERYTHING';
-var PACKET = btoa(SECRET);
+var PACKET = 'KNHUCURNIVLEKUSZKREESTSH'; /* base32 of SECRET: no 0/O or 1/I lookalikes to misread */
 (function () {
   var g = new THREE.Group(); g.position.set(24, 0, 100);
   var body = new THREE.Mesh(new THREE.BoxGeometry(5, 7, 3), new THREE.MeshBasicMaterial({ color: 0x131824 })); body.position.y = 3.5; g.add(body);
@@ -541,7 +541,7 @@ function cardHTML(z) {
   if (z.id === 'terminal') {
     if (unlocked) return h + '<div class="k">// DECODER</div><h2>Access granted</h2><p class="ok">The garage door is open: west of the gallery. Contact lives there.</p>';
     return h + '<div class="k">// DECODER · ENCRYPTED PACKET</div><h2>Decode it, enter the passphrase</h2><div class="pk">' + esc(PACKET) + '</div>' +
-      '<input id="pw" type="text" autocomplete="off" spellcheck="false" placeholder="passphrase, then Enter" aria-label="passphrase"><div id="pwmsg" class="fine">Click the field to type (Esc returns to driving). Hint: every analyst&#39;s first decode.</div>';
+      '<input id="pw" type="text" autocomplete="off" spellcheck="false" placeholder="passphrase, then Enter" aria-label="passphrase"><div id="pwmsg" class="fine">Click the field to type (Esc returns to driving). Hint: base32. Every analyst&#39;s first decode.</div>';
   }
   if (z.id === 'garage') {
     return h + '<div class="k">// THE GARAGE · CONTACT</div><h2>Let&#39;s talk</h2><p>Thanks for finding the door. Security automation, incident response, and building things that look as good as they run. Email me, and add me on LinkedIn.</p>' +
@@ -560,7 +560,7 @@ function toast(msg, cls) { var t = $('#toast'); t.textContent = msg; t.className
 function trySecret(v) {
   var msg = $('#pwmsg');
   if (String(v).trim().toUpperCase() === SECRET) { unlock(true); showCard(activeZone); }
-  else if (msg) { msg.className = 'fine bad'; msg.textContent = 'ACCESS DENIED. Decode the packet first (base64).'; }
+  else if (msg) { msg.className = 'fine bad'; msg.textContent = 'ACCESS DENIED. Decode the packet first (base32).'; }
 }
 function unlock(fresh) {
   unlocked = true; store.set('unlocked', '1'); gateCollider.off = true; garageSign.visible = false; garageSignOK.visible = true;

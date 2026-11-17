@@ -14,7 +14,7 @@ window.RESUME = {
    "co": "Torq",
    "dates": "12/2025 – 11/2026",
    "loc": "Remote",
-   "text": "Managed a portfolio of 30+ enterprise accounts representing $4M+ in ARR as a top performer on the team, leading hands-on implementation and onboarding, then serving as technical advisor through adoption and expansion. Pioneered the customer Value Report and the automation ROI report. Built Python workflows and API integrations across SIEM, EDR, ticketing and cloud tools, and turned customer feedback and security trends into product input."
+   "text": "Managed a portfolio of 30+ enterprise accounts as a top performer on the team, leading hands-on implementation and onboarding, then serving as technical advisor through adoption and expansion. Pioneered the customer Value Report and the automation ROI report. Built Python workflows and API integrations across SIEM, EDR, ticketing and cloud tools, and turned customer feedback and security trends into product input."
   },
   {
    "role": "SOAR Engineer, Global Information Security",

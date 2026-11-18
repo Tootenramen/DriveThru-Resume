@@ -10,7 +10,7 @@ window.RESUME = {
  "github": "https://github.com/Tootenramen",
  "jobs": [
   {
-   "role": "Hyperautomation Customer Success Engineer",
+   "role": "Security Automation Customer Success Engineer",
    "co": "Torq",
    "dates": "12/2025 – 11/2026",
    "loc": "Remote",
